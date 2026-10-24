@@ -98,10 +98,10 @@ fun AllocationDeskScreen() {
         allocatedQuantities = updatedQuantities
     }
 
-    val filteredItems = remember(searchQuery, selectedCategory, inventory) {
+    val filteredItems = remember(searchQuery, selectedCategory) {
         val query = searchQuery.trim()
 
-        inventory.filter { hardware ->
+        LabHardwareInventory.items.filter { hardware ->
             val matchesSearch =
                 hardware.name.contains(query, ignoreCase = true) ||
                         hardware.category.contains(query, ignoreCase = true) ||
@@ -179,7 +179,7 @@ fun AllocationDeskScreen() {
                 }
 
                 HardwareCard(
-                    item = hardware,
+                    item = inventory[catalogIndex],
                     allocatedCount = allocatedQuantities[catalogIndex],
                     onAllocate = { changeReservedQuantity(hardware.id, 1) },
                     onRelease = { changeReservedQuantity(hardware.id, -1) }                )
